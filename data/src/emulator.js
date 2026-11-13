@@ -178,7 +178,7 @@ class EmulatorJS {
             console.warn("Using EmulatorJS beta. Not checking for updates. This instance may be out of date. Using stable is highly recommended unless you build and ship your own cores.");
             return;
         }
-        fetch("https://esm.sh/gh/marble892/EmulatorJS@57dc1e8/data/version.json?raw").then(response => {
+        fetch("https://esm.sh/gh/marble892/EmulatorJS/data/version.json?raw").then(response => {
             if (response.ok) {
                 response.text().then(body => {
                     let version = JSON.parse(body);
@@ -615,7 +615,7 @@ class EmulatorJS {
             if (res === -1) {
                 console.log("File not found, attempting to fetch from the pinned esm.sh data.");
                 console.error("**THIS METHOD IS A FAILSAFE, AND NOT OFFICIALLY SUPPORTED. USE AT YOUR OWN RISK**");
-                res = await this.downloadFile(`https://esm.sh/gh/marble892/EmulatorJS@57dc1e8/data/${corePath}`, (progress) => {
+                res = await this.downloadFile(`https://esm.sh/gh/marble892/EmulatorJS/data/${corePath}`, (progress) => {
                     this.textElem.innerText = this.localization("Download Game Core") + progress;
                 }, true, { responseType: "arraybuffer", method: "GET" });
                 if (res === -1) {

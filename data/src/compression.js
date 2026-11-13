@@ -26,7 +26,7 @@ class EJS_COMPRESSION {
     getWorkerFile(method) {
         return new Promise(async (resolve, reject) => {
             let path, obj;
-            const baseUrl = "https://esm.sh/gh/marble892/EmulatorJS@57dc1e8/data/";
+            const baseUrl = "https://esm.sh/gh/marble892/EmulatorJS/data/";
             if (method === "7z") {
                 path = "compression/extract7z.js";
                 obj = "sevenZip";
