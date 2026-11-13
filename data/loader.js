@@ -11,7 +11,7 @@
     ];
 
     const folderPath = (path) => path.substring(0, path.length - path.split("/").pop().length);
-    let scriptPath = "https://esm.sh/gh/marble892/EmulatorJS/data/"
+    let scriptPath = "https://esm.sh/gh/marble892/EmulatorJS@57dc1e8/data/"
     //console.log(scriptPath);
     function loadScript(file) {
         return new Promise(function(resolve) {

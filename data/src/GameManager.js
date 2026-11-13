@@ -343,7 +343,7 @@ class EJS_GameManager {
     }
     loadPpssppAssets() {
         return new Promise(resolve => {
-            this.EJS.downloadFile("cores/ppsspp-assets.zip", null, false, { responseType: "arraybuffer", method: "GET" }).then((res) => {
+            this.EJS.downloadFile("cores/ppsspp-assets.zip?raw", null, false, { responseType: "arraybuffer", method: "GET" }).then((res) => {
                 this.EJS.checkCompression(new Uint8Array(res.data), this.EJS.localization("Decompress Game Data")).then((pspassets) => {
                     if (pspassets === -1) {
                         this.EJS.textElem.innerText = this.localization("Network Error");
