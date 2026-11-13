@@ -11,18 +11,20 @@
     ];
 
     const folderPath = (path) => path.substring(0, path.length - path.split("/").pop().length);
-    let scriptPath = "https://esm.sh/gh/marble892/EmulatorJS/data/"
+    let scriptPath = (typeof window.EJS_pathtodata === "string") ? window.EJS_pathtodata : folderPath((new URL(document.currentScript.src)).pathname);
+    if (!scriptPath.endsWith("/")) scriptPath += "/";
+    const withRaw = (path) => path.endsWith("?raw") ? path : path + (path.includes("?") ? "&raw" : "?raw");
     //console.log(scriptPath);
     function loadScript(file) {
         return new Promise(function(resolve) {
             let script = document.createElement("script");
             script.src = function() {
                 if ("undefined" != typeof EJS_paths && typeof EJS_paths[file] === "string") {
-                    return EJS_paths[file];
+                    return withRaw(EJS_paths[file]);
                 } else if (file.endsWith("emulator.min.js")) {
-                    return scriptPath + file + "?raw";
+                    return withRaw(scriptPath + file);
                 } else {
-                    return scriptPath + "src/" + file + "?raw";
+                    return withRaw(scriptPath + "src/" + file);
                 }
             }();
             script.onload = resolve;
@@ -39,9 +41,9 @@
             css.rel = "stylesheet";
             css.href = function() {
                 if ("undefined" != typeof EJS_paths && typeof EJS_paths[file] === "string") {
-                    return EJS_paths[file];
+                    return withRaw(EJS_paths[file]);
                 } else {
-                    return scriptPath + file  + "?raw";
+                    return withRaw(scriptPath + file);
                 }
             }();
             css.onload = resolve;
@@ -133,9 +135,9 @@
             let path;
             console.log("Loading language", language);
             if ("undefined" != typeof EJS_paths && typeof EJS_paths[language] === "string") {
-                path = EJS_paths[language];
+                path = withRaw(EJS_paths[language]);
             } else {
-                path = scriptPath + "localization/" + language + ".json?raw";
+                path = withRaw(scriptPath + "localization/" + language + ".json");
             }
             config.language = language;
             config.langJson = JSON.parse(await (await fetch(path)).text());

@@ -1,10 +1,10 @@
 # Compression Libraries
 
-<!-- ## extract7z.js?raw
+<!-- ## Extract7z.js
 
 ## Extractzip.js -->
 
-## libunrar.js?raw
+## Libunrar.js
 
 Emscripten port of RARLab's open-source unrar library
 

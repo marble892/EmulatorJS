@@ -26,7 +26,6 @@ class EJS_COMPRESSION {
     getWorkerFile(method) {
         return new Promise(async (resolve, reject) => {
             let path, obj;
-            const baseUrl = "https://esm.sh/gh/marble892/EmulatorJS/data/";
             if (method === "7z") {
                 path = "compression/extract7z.js";
                 obj = "sevenZip";
@@ -37,14 +36,13 @@ class EJS_COMPRESSION {
                 path = "compression/libunrar.js";
                 obj = "rar";
             }
-            path = baseUrl + path + "?raw";
             const res = await this.EJS.downloadFile(path, null, false, { responseType: "text", method: "GET" });
             if (res === -1) {
                 this.EJS.startGameError(this.EJS.localization("Network Error"));
                 return;
             }
             if (method === "rar") {
-                const res2 = await this.EJS.downloadFile(baseUrl + "compression/libunrar.wasm?raw", null, false, { responseType: "arraybuffer", method: "GET" });
+                const res2 = await this.EJS.downloadFile("compression/libunrar.wasm", null, false, { responseType: "arraybuffer", method: "GET" });
                 if (res2 === -1) {
                     this.EJS.startGameError(this.EJS.localization("Network Error"));
                     return;
@@ -63,7 +61,7 @@ class EJS_COMPRESSION {
                         onRuntimeInitialized: function() {},
                         locateFile: function(file) {
                             console.log("locateFile");
-                            return "` + path + `?raw";
+                            return "` + path + `";
                         }
                     };
                     ` + res.data + `

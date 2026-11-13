@@ -101,9 +101,14 @@ class EmulatorJS {
                     }
                 })
                 return;
-            };
+            }
+            const basePath = notWithPath ? "" : this.config.dataPath;
+            path = basePath + path;
             if (!notWithPath && this.config.filePaths && typeof this.config.filePaths[path.split("/").pop()] === "string") {
                 path = this.config.filePaths[path.split("/").pop()];
+            }
+            if (!notWithPath && !path.startsWith("blob:") && !path.startsWith("data:") && !path.endsWith("?raw")) {
+                path += path.includes("?") ? "&raw" : "?raw";
             }
             let url;
             try { url = new URL(path) } catch(e) {};
@@ -176,7 +181,7 @@ class EmulatorJS {
             console.warn("Using EmulatorJS beta. Not checking for updates. This instance may be out of date. Using stable is highly recommended unless you build and ship your own cores.");
             return;
         }
-        fetch("https://esm.sh/gh/marble892/EmulatorJS/data/version.json?raw").then(response => {
+        fetch("https://cdn.emulatorjs.org/stable/data/version.json?raw").then(response => {
             if (response.ok) {
                 response.text().then(body => {
                     let version = JSON.parse(body);
@@ -570,7 +575,7 @@ class EmulatorJS {
                 this.initGameCore(js, wasm, thread);
             });
         }
-        const report = "cores/reports/" + this.getCore() + ".json?raw";
+        const report = "cores/reports/" + this.getCore() + ".json";
         this.downloadFile(report, null, false, { responseType: "text", method: "GET" }).then(async rep => {
             if (rep === -1 || typeof rep === "string" || typeof rep.data === "string") {
                 rep = {};
@@ -598,7 +603,7 @@ class EmulatorJS {
             }
 
             let legacy = (this.supportsWebgl2 && this.webgl2Enabled ? "" : "-legacy");
-            let filename = this.getCore() + (threads ? "-thread" : "") + legacy + "-wasm.data?raw";
+            let filename = this.getCore() + (threads ? "-thread" : "") + legacy + "-wasm.data";
             if (!this.debug) {
                 const result = await this.storage.core.get(filename);
                 if (result && result.version === rep.buildStart) {
@@ -611,9 +616,10 @@ class EmulatorJS {
                 this.textElem.innerText = this.localization("Download Game Core") + progress;
             }, false, { responseType: "arraybuffer", method: "GET" });
             if (res === -1) {
-                console.log("File not found, attempting to fetch from the pinned esm.sh data.");
+                console.log("File not found, attemping to fetch from emulatorjs cdn.");
                 console.error("**THIS METHOD IS A FAILSAFE, AND NOT OFFICIALLY SUPPORTED. USE AT YOUR OWN RISK**");
-                res = await this.downloadFile(`https://esm.sh/gh/marble892/EmulatorJS/data/${corePath}`, (progress) => {
+                let version = this.ejs_version.endsWith("-beta") ? "nightly" : this.ejs_version;
+                res = await this.downloadFile(`https://cdn.emulatorjs.org/${version}/data/${corePath}?raw`, (progress) => {
                     this.textElem.innerText = this.localization("Download Game Core") + progress;
                 }, true, { responseType: "arraybuffer", method: "GET" });
                 if (res === -1) {
@@ -624,7 +630,7 @@ class EmulatorJS {
                     }
                     return;
                 }
-                console.warn("File was not found at the configured data path, but was found at the pinned esm.sh data path.");
+                console.warn("File was not found locally, but was found on the emulatorjs cdn.\nIt is recommended to download the stable release from here: https://cdn.emulatorjs.org/releases/");
             }
             gotCore(res.data);
             this.storage.core.put(filename, {
