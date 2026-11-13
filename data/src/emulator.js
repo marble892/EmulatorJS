@@ -101,9 +101,7 @@ class EmulatorJS {
                     }
                 })
                 return;
-            }
-            const basePath = notWithPath ? "" : this.config.dataPath;
-            path = basePath + path;
+            };
             if (!notWithPath && this.config.filePaths && typeof this.config.filePaths[path.split("/").pop()] === "string") {
                 path = this.config.filePaths[path.split("/").pop()];
             }
