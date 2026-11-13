@@ -27,13 +27,13 @@ class EJS_COMPRESSION {
         return new Promise(async (resolve, reject) => {
             let path, obj;
             if (method === "7z") {
-                path = "compression/extract7z.js?raw";
+                path = "compression/extract7z.js";
                 obj = "sevenZip";
             } else if (method === "zip") {
-                path = "compression/extractzip.js?raw";
+                path = "compression/extractzip.js";
                 obj = "zip";
             } else if (method === "rar") {
-                path = "compression/libunrar.js?raw";
+                path = "compression/libunrar.js";
                 obj = "rar";
             }
             const res = await this.EJS.downloadFile(path, null, false, { responseType: "text", method: "GET" });
@@ -61,7 +61,7 @@ class EJS_COMPRESSION {
                         onRuntimeInitialized: function() {},
                         locateFile: function(file) {
                             console.log("locateFile");
-                            return "` + path + `";
+                            return "` + path + `?raw";
                         }
                     };
                     ` + res.data + `
