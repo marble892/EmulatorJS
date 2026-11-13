@@ -27,13 +27,13 @@ class EJS_COMPRESSION {
         return new Promise(async (resolve, reject) => {
             let path, obj;
             if (method === "7z") {
-                path = "compression/extract7z.js";
+                path = "compression/extract7z.js?raw";
                 obj = "sevenZip";
             } else if (method === "zip") {
-                path = "compression/extractzip.js";
+                path = "compression/extractzip.js?raw";
                 obj = "zip";
             } else if (method === "rar") {
-                path = "compression/libunrar.js";
+                path = "compression/libunrar.js?raw";
                 obj = "rar";
             }
             const res = await this.EJS.downloadFile(path, null, false, { responseType: "text", method: "GET" });

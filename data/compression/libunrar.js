@@ -113,7 +113,7 @@ Y.prototype.get_Callback=Y.prototype.Jb=function(){return Hb(this.va)};Y.prototy
 Object.defineProperty(Y.prototype,"OpenResult",{get:Y.prototype.Lb,set:Y.prototype.qc});Y.prototype.get_Flags=Y.prototype.Ea=function(){return Lb(this.va)};Y.prototype.set_Flags=Y.prototype.fb=function(a){var b=this.va;a&&"object"===typeof a&&(a=a.va);Mb(b,a)};Object.defineProperty(Y.prototype,"Flags",{get:Y.prototype.Ea,set:Y.prototype.fb});Y.prototype.__destroy__=function(){Nb(this.va)};function Z(){throw"cannot construct a VoidPtr, no constructor in IDL";}Z.prototype=Object.create(V.prototype);
 Z.prototype.constructor=Z;Z.prototype.Wa=Z;Z.gb={};c.VoidPtr=Z;Z.prototype.__destroy__=function(){Ob(this.va)};(function(){function a(){}Da||Ba.unshift(a)})();c.ensureString=dc;c.WORKERFS=U;S.mount=S.Aa;S.unmount=S.$c;
 //var ENVIRONMENT_IS_WORKER = typeof importScripts === 'function';
-//if(ENVIRONMENT_IS_WORKER) importScripts('libunrar.js')
+//if(ENVIRONMENT_IS_WORKER) importScripts('libunrar.js?raw')
 
 // wcchoi Code:
 /* ----------------
