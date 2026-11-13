@@ -1,4 +1,7 @@
 class GamepadHandler {
+    gamepads;
+    timeout;
+    listeners;
     constructor() {
         this.buttonLabels = {
             0: 'BUTTON_1',
@@ -20,7 +23,8 @@ class GamepadHandler {
         };
         this.gamepads = [];
         this.listeners = {};
-        this.timeout = setTimeout(this.loop.bind(this), 0);
+        this.timeout = null;
+        this.loop();
     }
     terminate() {
         window.clearTimeout(this.timeout);
@@ -67,7 +71,6 @@ class GamepadHandler {
                         this.dispatchEvent('axischanged', {
                             axis: axis,
                             value: newVal,
-                            oldValue: val,
                             index: gamepad.index,
                             label: this.getAxisLabel(axis, newVal),
                             gamepadIndex: gamepad.index,
@@ -161,4 +164,4 @@ class GamepadHandler {
     }
 }
 
-export { GamepadHandler };
+window.GamepadHandler = GamepadHandler;
